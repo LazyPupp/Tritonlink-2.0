@@ -1,0 +1,60 @@
+combine multiple forms into one according to projct spec
+put related forms on a single page
+change html input forms with a limited amount of values (ie true/false fields to drop-down instead of text input)
+print error messages
+
+check time_period start < end					
+check duplicates in student tables*					YEA
+check duplicates in time_period*					YEA
+check duplicates in attends and probation*			YEA			
+check duplicates in previous_degree*				YEA
+check duplicates in owns_degree*					YEA
+check min_units < max_units in course			
+check course_id <> prereq_id in prereq*				YEA
+check duplicates in prereq*							YEA
+check course cant be a prereq of itself				YEA
+check two courses cant be prereqs of each other
+check for duplicates in course_class*				YEA
+check for duplicates in waitlist*					YEA
+check for duplicates in enrolled*					YEA
+check start_time < end_time for meeting			
+check duplicates for review*						YEA
+check meeting type is review for review table
+check for duplicates in taught_by*					YEA
+check for duplicates in faculty_department*			YEA
+check for duplicates in faculty						YEA
+check for duplicates in department					YEA
+check duplicates in course_offered*					YEA		
+check duplicates in belongs_to*						YEA
+check duplicates in major and minor*				YEA
+check that a student cant major and minor for the same degree
+check duplicates in degree_required*				YEA
+check duplicates in insured*						YEA
+check that a student cant have multiple types of insurance*  NOT TRUE student can have RAFT + OTHER
+check for duplicates in thesis committee*			YEA
+check for duplicates in other thesis committee*		YEA
+check that student and faculty are not the same dept in other thesis committee
+check or duplicates in advises*						YEA
+check that grad student and advisor are in the same dept
+change foreign key for ms and phd to refer to graduate instead of student
+check for duplicates in bachelors/ms*				
+check that a student cant be both a undergraduate and a graduate					
+check that a student cant be enrolled in a class if the number of students is >= the enrollment limit
+
+
+
+Need to fix:
+JPS Lag
+
+Fixed:
+Position on waitlist
+Course name needs to be unique
+Bachelor/MS duplicates
+Enrolled primary key (sid, section_id)
+
+notes
+-dont need dept for other dept thesis
+-need to connect dept and degree, dept offers degree
+Meeting same day same building?
+Faculty ( same name, but diff occupation)
+Degree unique (concentration,degree type)?
