@@ -85,15 +85,15 @@ create table Class_(section_id integer not null identity(1,1),
 				   
 create table Course_Taken(id integer not null identity(1,1),
 						  sid integer not null,
-						  course_id integer not null,
 						  section_id integer not null,
 						  quarter varchar(20) not null,
 						  year_taken integer not null,
-						  grade varchar(20) not null,
+						  units_taken_for integer not null,
+						  grade_option varchar(255) not null,
+						  grade varchar(20),
 						  primary key (id),
-						  unique(sid, course_id, quarter, year_taken),
+						  unique(sid, section_id, quarter, year_taken),
 						  foreign key (sid) references Student(sid),
-						  foreign key (course_id) references Course(course_id),
 						  foreign key (section_id) references Class_(section_id));
 				   
 create table Course_Class(course_id integer not null,
@@ -125,7 +125,8 @@ create table Meeting(meeting_id integer not null identity(1,1),
 					 room varchar(255) not null,
 					 building varchar(255) not null,
 					 mandatory bit not null,
-					 primary key (meeting_id));
+					 primary key (meeting_id),
+					 unique(type_,day_of_week,start_time,end_time,room,building,mandatory));
 					 
 create table Review(meeting_id integer not null,
 					date_ date not null,
@@ -135,6 +136,7 @@ create table Review(meeting_id integer not null,
 create table Class_Meeting(section_id integer not null,
 						   meeting_id integer not null,
 						   primary key (section_id, meeting_id),
+						   unique (meeting_id),
 						   foreign key (section_id) references Class_(section_id),
 						   foreign key (meeting_id) references Meeting(meeting_id));
 						   
@@ -143,12 +145,12 @@ create table Faculty(name varchar(255) not null,
 					 primary key (name));
 					 
 create table Taught_By(name varchar(255) not null,
-					   section_id integer not null,
+					   course_id integer not null,
 					   quarter varchar(20) not null,
 					   year_ integer not null,
-					   primary key(name, section_id, quarter, year_),
+					   primary key(name, course_id, quarter, year_),
 					   foreign key (name) references Faculty(name),
-					   foreign key (section_id) references Class_(section_id));
+					   foreign key (course_id) references Course(course_id));
 					   
 create table Department(department_id integer not null identity(1,1),
 						department_name varchar(255) not null unique,
@@ -172,10 +174,17 @@ create table Belongs_To(sid integer not null,
 						foreign key (sid) references Graduate(sid),
 						foreign key (department_id) references Department(department_id));
 
-create table Degree(degree_id integer not null identity(1,1),
+/*create table Degree(degree_id integer not null identity(1,1),
 					concentration varchar(255) not null,
 					degree_type varchar(255) not null,
 					unique(concentration, degree_type),
+					primary key (degree_id));*/
+					
+create table Degree(degree_id integer not null identity(1,1),
+					department_id integer not null,
+					degree_type varchar(255) not null,
+					concentration varchar(255),
+					foreign key (department_id) references Department(department_id), 
 					primary key (degree_id));
 						
 create table Major(sid integer not null,
@@ -190,12 +199,19 @@ create table Minor(sid integer not null,
 				   foreign key (sid) references Student(sid),
 				   foreign key (degree_id) references Degree(degree_id));
 				   
-create table Degree_Required(department_id integer not null,
+/*create table Degree_Required(department_id integer not null,
 							 degree_id integer not null,
 							 category varchar(255) not null,
 							 units_completed integer not null,
 							 primary key (department_id, degree_id),
 							 foreign key (department_id) references Department(department_id),
+							 foreign key (degree_id) references Degree(degree_id));*/
+							 
+create table Degree_Required(degree_id integer not null,
+							 category varchar(255) not null,
+							 units_completed integer not null,
+							 min_gpa float,
+							 primary key (degree_id, category, units_completed),
 							 foreign key (degree_id) references Degree(degree_id));
 							 
 create table Health_Insurance(health_id integer not null identity(1,1),
@@ -232,3 +248,39 @@ create table BachelorsMS(sid integer not null,
 						 primary key (sid),
 						 foreign key(sid) references Undergraduate(sid),
 						 foreign key(sid) references MS(sid));
+						 
+create table GRADE_CONVERSION(LETTER_GRADE CHAR(2) NOT NULL,
+			 NUMBER_GRADE DECIMAL(2,1));
+			 
+create table extra_category(id integer not null identity(1,1),
+							course_id integer not null,
+							category varchar(255) not null,
+							primary key(id),
+							foreign key (course_id) references Course(course_id));
+							
+create table concentration(id integer not null identity(1,1),
+						   course_id integer not null,
+						   concentration_name varchar(255) not null,
+						   min_gpa float not null,
+						   units integer not null,
+						   primary key(id),
+						   foreign key (course_id) references Course(course_id));
+						   
+						   
+create table review_time(id integer not null,
+						  start_time time not null);
+						  
+						  
+						  
+create table meeting2b(meeting_id integer not null,
+					 section_id integer not null,
+					 type_ varchar(255) not null,
+					 sunday integer,
+					 monday integer,
+					 tuesday integer,
+					 wednesday integer,
+					 thursday integer,
+					 friday integer,
+					 saturday integer,
+					 primary key (meeting_id));
+	
