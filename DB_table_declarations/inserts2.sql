@@ -413,8 +413,8 @@ insert into meeting2b values (4,30,'Lecture',null,5,null,5,null,5,null);
 /*5 CSE221*/
 insert into meeting2b values (5,36,'Lecture',null,5,null,5,null,5,null);	
 /*6 CSE105*/
-insert into meeting2b values (6,7'Lecture',null,null,7,null,7,null,null);	
-insert into meeting2b values (7,7'Discussion',null,null,null,null,null,11,null);	
+insert into meeting2b values (6,7,'Lecture',null,null,7,null,7,null,null);	
+insert into meeting2b values (7,7,'Discussion',null,null,null,null,null,11,null);	
 /*7 PHIL165*/
 insert into meeting2b values (8,34,'Lecture',null,null,8,null,8,null,null);	
 /*8 MAE108*/
