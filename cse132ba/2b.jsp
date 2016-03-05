@@ -17,7 +17,7 @@
             <%
 				Statement stmt = null;
 				Statement stmt2 = null;
-				String query = "SELECT ct.section_id, co.course_name FROM Course_Taken ct, Course_Class cc, Course co"+ 
+				String query = "SELECT DISTINCT ct.section_id, co.course_name FROM Course_Taken ct, Course_Class cc, Course co"+ 
 								" WHERE ct.section_id = cc.section_id AND cc.course_id = co.course_id AND ct.quarter = 'Winter' AND ct.year_taken = '2016'";
                 try {
                     // Load Oracle Driver class file
@@ -44,9 +44,9 @@
 					<% } %>
 				</select>
 				Start Date:
-				<Input value = "" name = 'start_date'>
+				<Input value = "" name = 'start_day'>
 				End Date:
-				<Input value = "" name = 'end_date'>
+				<Input value = "" name = 'end_day'>
 				<input type="submit">			
 			</form>
 
@@ -57,7 +57,8 @@
  
                 </tr>
 				
-				<%String query2 = "(SELECT '1. Sunday' as day, rt.start_time as time FROM review_time rt WHERE id NOT IN (SELECT distinct(m.sunday) FROM Course_Taken ct INNER JOIN meeting2b m ON ct.section_id = m.section_id INNER JOIN Student s on s.sid = ct.sid WHERE m.sunday IS NOT NULL AND s.ssn IN (SELECT s.ssn  FROM Course_taken ct INNER JOIN Student s on s.sid = ct.sid WHERE section_id = "+ request.getParameter("section_id")+"))) "+ 
+				<%String query2 = "SELECT * FROM ( "+
+								"(SELECT '1. Sunday' as day, rt.start_time as time FROM review_time rt WHERE id NOT IN (SELECT distinct(m.sunday) FROM Course_Taken ct INNER JOIN meeting2b m ON ct.section_id = m.section_id INNER JOIN Student s on s.sid = ct.sid WHERE m.sunday IS NOT NULL AND s.ssn IN (SELECT s.ssn  FROM Course_taken ct INNER JOIN Student s on s.sid = ct.sid WHERE section_id = "+ request.getParameter("section_id")+"))) "+ 
 								"UNION "+ 
 								"(SELECT '2. Monday' as day, rt.start_time as time FROM review_time rt  WHERE id NOT IN (SELECT distinct(m.monday) FROM Course_Taken ct INNER JOIN meeting2b m ON ct.section_id = m.section_id INNER JOIN Student s on s.sid = ct.sid WHERE m.monday IS NOT NULL AND s.ssn IN (SELECT s.ssn  FROM Course_taken ct INNER JOIN Student s on s.sid = ct.sid WHERE section_id = "+ request.getParameter("section_id")+" ))) "+ 
 								"UNION "+ 
@@ -69,7 +70,8 @@
 								"UNION "+ 
 								"(SELECT '6. Friday' as day, rt.start_time as time FROM review_time rt  WHERE id NOT IN (SELECT distinct(m.friday) FROM Course_Taken ct INNER JOIN meeting2b m ON ct.section_id = m.section_id INNER JOIN Student s on s.sid = ct.sid WHERE m.friday IS NOT NULL AND s.ssn IN (SELECT s.ssn FROM Course_taken ct INNER JOIN Student s on s.sid = ct.sid WHERE section_id = "+ request.getParameter("section_id")+" ))) "+ 
 								"UNION "+ 
-								"(SELECT '7. Saturday' as day, rt.start_time as time FROM review_time rt  WHERE id NOT IN (SELECT distinct(m.saturday) FROM Course_Taken ct INNER JOIN meeting2b m ON ct.section_id = m.section_id INNER JOIN Student s on s.sid = ct.sid WHERE m.saturday IS NOT NULL AND s.ssn IN (SELECT s.ssn FROM Course_taken ct INNER JOIN Student s on s.sid = ct.sid WHERE section_id = "+ request.getParameter("section_id")+" ))) "+
+								"(SELECT '7. Saturday' as day, rt.start_time as time FROM review_time rt  WHERE id NOT IN (SELECT distinct(m.saturday) FROM Course_Taken ct INNER JOIN meeting2b m ON ct.section_id = m.section_id INNER JOIN Student s on s.sid = ct.sid WHERE m.saturday IS NOT NULL AND s.ssn IN (SELECT s.ssn FROM Course_taken ct INNER JOIN Student s on s.sid = ct.sid WHERE section_id = "+ request.getParameter("section_id")+" ))))fs "+
+								"WHERE fs.day >= '" +request.getParameter("start_day") +"' AND fs.day <= '"+request.getParameter("end_day")+"' "+
 								"ORDER BY day, time";%>
 				
 				<%ResultSet rs2 = stmt2.executeQuery(query2);%>
