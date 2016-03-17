@@ -30,7 +30,7 @@
                             "INSERT INTO taught_by VALUES (?, ?, ?, ?)");
 						
 						pstmt.setString(1, request.getParameter("name"));
-						pstmt.setInt(2, Integer.parseInt(request.getParameter("section_id")));
+						pstmt.setInt(2, Integer.parseInt(request.getParameter("course_id")));
 						pstmt.setString(3, request.getParameter("quarter"));
 						pstmt.setInt(4, Integer.parseInt(request.getParameter("year_")));
                         int rowCount = pstmt.executeUpdate();
@@ -90,7 +90,7 @@
                 <table border="1">
                     <tr>
                         <th>Name</th>
-						<th>Section</th>
+						<th>Course</th>
 						<th>Quarter</th>
 						<th>Year</th>
                     </tr>
@@ -98,7 +98,7 @@
                         <form action="taught_by.jsp" method="get">
                             <input type="hidden" value="insert" name="action">
                             <th><input value="" name="name" size="10"></th>
-							<th><input value="" name="section_id" size="10"></th>
+							<th><input value="" name="course_id" size="10"></th>
 							<th>
 								<select value="" name="quarter">
 										<option value="Fall">Fall</option>
@@ -128,8 +128,8 @@
                             </td>
 							
                             <td>
-                                <input value="<%= rs.getInt("section_id") %>" 
-                                    name="section_id" size="10">
+                                <input value="<%= rs.getInt("course_id") %>" 
+                                    name="course_id" size="10">
                             </td>
 							
 							<td>

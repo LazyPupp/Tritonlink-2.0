@@ -140,11 +140,11 @@ create table Class_Meeting(section_id integer not null,
 						   foreign key (section_id) references Class_(section_id),
 						   foreign key (meeting_id) references Meeting(meeting_id));
 						   
-create table Faculty(name varchar(255) not null,
+create table Faculty(name varchar(255),
 					 title varchar(255) not null,
 					 primary key (name));
 					 
-create table Taught_By(name varchar(255) not null,
+create table Taught_By(name varchar(255),
 					   course_id integer not null,
 					   quarter varchar(20) not null,
 					   year_ integer not null,
@@ -283,4 +283,22 @@ create table meeting2b(meeting_id integer not null,
 					 friday integer,
 					 saturday integer,
 					 primary key (meeting_id));
+				   
+create table cpqg2 (course_name varchar(255),
+				   quarter varchar(255), 
+				   year_ integer, 
+				   professor varchar(255), 
+				   a_grade varchar(255) not null,
+				   b_grade varchar(255) not null,
+				   c_grade varchar(255) not null,
+				   d_grade varchar(255) not null,
+				   other_grade varchar(255) not null);
+				   
+create table cpg2 (course_name varchar(255),
+				   professor varchar(255), 
+				   a_grade varchar(255) not null,
+				   b_grade varchar(255) not null,
+				   c_grade varchar(255) not null,
+				   d_grade varchar(255) not null,
+				   other_grade varchar(255) not null);
 	

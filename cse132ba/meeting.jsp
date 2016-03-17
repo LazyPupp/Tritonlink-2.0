@@ -87,7 +87,7 @@
             <%
                     Statement statement = conn.createStatement();
 
-                    ResultSet rs = statement.executeQuery("SELECT * FROM meeting");
+                    ResultSet rs = statement.executeQuery("SELECT * FROM meeting Order By meeting_id");
             %>
 
                 <table border="1">
