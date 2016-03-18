@@ -110,6 +110,7 @@
 										<option value="Lecture">Lecture</option>
 										<option value="Discussion">Discussion</option>
 										<option value="Review">Review</option>
+										<option value="Lab">Lab</option>
 								</select>
 							</th>
 							<th>
